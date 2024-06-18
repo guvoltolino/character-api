@@ -20,7 +20,7 @@ const Card = ({ name, description, picture }) => {
 Card.propTypes = {
   name: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
-  picture: PropTypes.string, 
+  picture: PropTypes.string.isRequired, 
 };
 
 export default Card;

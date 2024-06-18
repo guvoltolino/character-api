@@ -1,9 +1,12 @@
+import os
+from django.conf import settings
 from django.shortcuts import render
 from django.http import HttpResponse,JsonResponse
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
+from django.core.files.storage import default_storage
 
 from .models import Character
 from .serializers import CharacterSerializer
@@ -68,49 +71,12 @@ def delete_character(request, id):
     if request.method == 'DELETE':
 
         character = Character.objects.get(pk=id)
+
+        if character.picture:
+            image_path = os.path.join(settings.MEDIA_ROOT, str(character.picture))
+            if default_storage.exists(image_path):
+                default_storage.delete(image_path)
         character.delete()
-
         return Response(True, status=status.HTTP_200_OK)
 
     return False
-
-@api_view(['POST'])
-def upload_picture(request):
-
-    if request.method == 'POST':
-
-        picture = request.FILES['picture']
-        id = request.POST['id']
-
-        character = Character.objects.get(pk=id)
-        character.picture = picture
-        character.save()
-
-        return Response(True, status=status.HTTP_200_OK)
-
-    return False
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# def databaseDjango():
-
-#     data = Character.objects.get()
-
-#     data = Character.objects.filter()
-
-#     data = Character.objects.exclude()
-
-#     data.save()
-
-#     data.delete()

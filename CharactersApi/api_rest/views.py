@@ -74,6 +74,22 @@ def delete_character(request, id):
 
     return False
 
+@api_view(['POST'])
+def upload_picture(request):
+
+    if request.method == 'POST':
+
+        picture = request.FILES['picture']
+        id = request.POST['id']
+
+        character = Character.objects.get(pk=id)
+        character.picture = picture
+        character.save()
+
+        return Response(True, status=status.HTTP_200_OK)
+
+    return False
+
 
 
 

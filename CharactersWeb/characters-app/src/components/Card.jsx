@@ -5,12 +5,20 @@ import { FaEdit, FaTrash } from 'react-icons/fa';
 import { useState } from 'react';
 import DeleteCharacterModal from './DeleteCharacter';
 import axios from 'axios';
+import EditCharacterModal from './EditCharacter';
 
 const Card = ({ id, name, description, picture }) => {
   const apiUrl = "http://127.0.0.1:8000";  
   const imageUrl = picture ? `${apiUrl}${picture}` : defaultImage;
 
-  const [open, setOpen] = useState(false);
+  const [openEditModal, setOpenEditModal] = useState(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+
+  const [characterData, setCharacterData] = useState({
+    name: name,
+    description: description,
+    picture: picture
+  });
 
   const handleDelete = async (id) => {
     try {
@@ -24,6 +32,27 @@ const Card = ({ id, name, description, picture }) => {
     }
   };
 
+  const handleEdit = async () => {
+    try {
+      const response = await axios.patch(`${apiUrl}/api/patch/${id}/`, characterData);
+      if (response.status === 200) {
+        setOpenEditModal(false);
+        setCharacterData(response.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setCharacterData({
+      ...characterData,
+      [name]: value
+    });
+  };
+
+
   return (
     
     <div className="bg-white shadow-md rounded-lg p-4 relative">
@@ -34,20 +63,27 @@ const Card = ({ id, name, description, picture }) => {
       </div>
       <div className="absolute top-0 right-0 m-2">
         <button
-         
+          onClick = {() => setOpenEditModal(true)}
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-4 rounded mr-2"
         >
           <FaEdit/>
         </button>
         <button
-          onClick={() => setOpen(true)}
+          onClick={() => setOpenDeleteModal(true)}
           className="bg-red-500 hover:bg-red-700 text-white font-bold py-4 px-4 rounded"
         >
           <FaTrash/>
         </button>
+        <EditCharacterModal 
+          isOpen={openEditModal}
+          onClose={() => setOpenEditModal(false)}
+          onSubmit={() => handleEdit(id)}
+          characterData={characterData}
+          handleInputChange={handleInputChange}
+        />
         <DeleteCharacterModal
-          isOpen={open}
-          onClose={() => setOpen(false)}
+          isOpen={openDeleteModal}
+          onClose={() => setOpenDeleteModal(false)}
           onSubmit={() => handleDelete(id)}
         />
       </div>

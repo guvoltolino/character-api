@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Card from '../components/Card';
-import Modal from '../components/Modal';
+import AddCharacterModal from '../components/AddCharacter';
 import { PlusIcon } from '@heroicons/react/24/outline';
 
 const Home = () => {
@@ -71,6 +71,7 @@ const Home = () => {
           characters.map((character) => (
             <Card
               key={character.id}
+              id={character.id}
               name={character.name}
               description={character.description}
               picture={character.picture}
@@ -84,7 +85,7 @@ const Home = () => {
       >
         <PlusIcon className="h-6 w-6" aria-hidden="true" />
       </button>
-      <Modal
+      <AddCharacterModal
         isOpen={open}
         onClose={() => setOpen(false)}
         onSubmit={handleSubmit}

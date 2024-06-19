@@ -2,7 +2,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 
-const Modal = ({
+const AddCharacterModal = ({
   isOpen,
   onClose,
   onSubmit,
@@ -98,7 +98,7 @@ const Modal = ({
                             <div className="mt-1">
                               <label
                                 htmlFor="file-upload"
-                                className="cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500 px-4 py-2 inline-flex items-center justify-center border border-gray-300 shadow-sm"
+                                className="cursor-pointer bg-white rounded-md font-medium text-blue-500 hover:text-blue-700 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500 px-4 py-2 inline-flex items-center justify-center border border-gray-300 shadow-sm"
                               >
                                 <span>Escolher arquivo</span>
                                 <input
@@ -146,4 +146,4 @@ const Modal = ({
   );
 };
 
-export default Modal;
+export default AddCharacterModal;

@@ -7,7 +7,7 @@ import DeleteCharacterModal from './DeleteCharacter';
 import axios from 'axios';
 import EditCharacterModal from './EditCharacter';
 
-const Card = ({ id, name, description, picture }) => {
+const Card = ({ id, name, description, picture, getCharacters }) => {
   const apiUrl = "http://127.0.0.1:8000";  
   const imageUrl = picture ? `${apiUrl}${picture}` : defaultImage;
 
@@ -34,23 +34,45 @@ const Card = ({ id, name, description, picture }) => {
 
   const handleEdit = async () => {
     try {
-      const response = await axios.patch(`${apiUrl}/api/patch/${id}/`, characterData);
+      const formData = new FormData();
+      formData.append("name", characterData.name);
+      formData.append("description", characterData.description);
+      if (characterData.picture) {
+        formData.append("picture", characterData.picture);
+      }
+  
+      const response = await axios.patch(`${apiUrl}/api/patch/${id}/`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+  
       if (response.status === 200) {
         setOpenEditModal(false);
         setCharacterData(response.data);
+        getCharacters();
       }
     } catch (error) {
       console.log(error);
     }
   };
+  
 
   const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setCharacterData({
-      ...characterData,
-      [name]: value
-    });
+    const { name, value, files } = event.target;
+    if (name === "picture") {
+      setCharacterData({
+        ...characterData,
+        picture: files[0]  
+      });
+    } else {
+      setCharacterData({
+        ...characterData,
+        [name]: value
+      });
+    }
   };
+  
 
 
   return (

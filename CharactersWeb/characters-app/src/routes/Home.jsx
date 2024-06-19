@@ -75,6 +75,7 @@ const Home = () => {
               name={character.name}
               description={character.description}
               picture={character.picture}
+              getCharacters={getCharacters}
             />
           ))
         )}

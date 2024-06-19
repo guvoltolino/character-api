@@ -10,7 +10,6 @@ const EditCharacterModal = ({
   characterData,
   handleInputChange,
 }) => {
-
   return (
     <Transition show={isOpen} as={Fragment}>
       <Dialog className="relative z-10" onClose={onClose}>
@@ -77,6 +76,21 @@ const EditCharacterModal = ({
                           rows={3}
                           className="mt-1 block w-full px-3 py-2 border resize-none border-gray-300 rounded-md shadow-sm"
                           value={characterData.description}
+                          onChange={handleInputChange}
+                        />
+                      </div>
+                      <div className="mt-4">
+                        <label
+                          htmlFor="picture"
+                          className="block text-sm font-medium text-gray-700"
+                        >
+                          Imagem
+                        </label>
+                        <input
+                          type="file"
+                          name="picture"
+                          id="picture"
+                          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
                           onChange={handleInputChange}
                         />
                       </div>

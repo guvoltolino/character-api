@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
+import { UserPlusIcon } from "@heroicons/react/24/outline";
 
 const AddCharacterModal = ({
   isOpen,
@@ -42,8 +43,9 @@ const AddCharacterModal = ({
                     <div className="text-center sm:ml-4 sm:text-left w-full">
                       <Dialog.Title
                         as="h3"
-                        className="text-lg font-medium leading-6 text-gray-900"
+                        className="text-lg font-medium text-gray-900 flex items-center"
                       >
+                        <UserPlusIcon className="h-5 w-5 text-gray-500 mr-2" />
                         Adicionar Novo Personagem
                       </Dialog.Title>
                       <form onSubmit={onSubmit} className="mt-6 space-y-6">
@@ -63,7 +65,7 @@ const AddCharacterModal = ({
                                 value={newCharacter.name}
                                 onChange={handleInputChange}
                                 required
-                                className="block w-full rounded-md border-gray-300 shadow-sm"
+                                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
                               />
                             </div>
                           </div>
@@ -82,8 +84,8 @@ const AddCharacterModal = ({
                                 rows="3"
                                 value={newCharacter.description}
                                 onChange={handleInputChange}
+                                className="mt-1 block w-full px-3 py-2 border resize-none border-gray-300 rounded-md shadow-sm"
                                 required
-                                className="block w-full rounded-md border-gray-300 shadow-sm resize-none"
                               />
                             </div>
                           </div>
@@ -95,27 +97,13 @@ const AddCharacterModal = ({
                             >
                               Imagem
                             </label>
-                            <div className="mt-1">
-                              <label
-                                htmlFor="file-upload"
-                                className="cursor-pointer bg-white rounded-md font-medium text-blue-500 hover:text-blue-700 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500 px-4 py-2 inline-flex items-center justify-center border border-gray-300 shadow-sm"
-                              >
-                                <span>Escolher arquivo</span>
-                                <input
-                                  id="file-upload"
-                                  name="picture"
-                                  type="file"
-                                  onChange={handleFileChange}
-                                  className="sr-only"
-                                  required
-                                />
-                              </label>
-                            </div>
-                            <span className="ml-2">
-                              {newCharacter.picture
-                                ? newCharacter.picture.name
-                                : "Nenhum arquivo selecionado"}
-                            </span>
+                            <input
+                              type="file"
+                              name="picture"
+                              id="picture"
+                              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
+                              onChange={handleFileChange}
+                            />
                           </div>
                         </div>
                         <div className="flex justify-end space-x-3">

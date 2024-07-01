@@ -41,7 +41,7 @@ const Card = ({ id, name, description, picture, getCharacters }) => {
         formData.append("picture", characterData.picture);
       }
   
-      const response = await axios.patch(`${apiUrl}/api/patch/${id}/`, formData, {
+      const response = await axios.patch(`${apiUrl}/api/put/${id}/`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }

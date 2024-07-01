@@ -5,6 +5,7 @@ from rest_framework import status
 from rest_framework.test import APIClient
 from .models import Character
 from .serializers import CharacterSerializer
+from django.core.files.uploadedfile import SimpleUploadedFile
 
 class CharacterTests(TestCase):
 
@@ -27,23 +28,35 @@ class CharacterTests(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data, serializer.data)
 
-    def test_create_character(self):
-        url = reverse('post')
-        data = {'name': 'Test Character', 'description': 'test description', 'level': 1, 'id': 1}
-        response = self.client.post(url, data, format='json')
+    def test_post_character(self):
+        url = reverse('post_character')
+        response = self.client.post(url, self.character_data, format='multipart')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(Character.objects.count(), 1)
-        self.assertEqual(Character.objects.get().name, 'Test Character')
-
-    def test_update_character(self):
-        character = Character.objects.create(name='Test Character', id = 1)
+        self.assertTrue(Character.objects.filter(name='New Character').exists())
+        new_character = Character.objects.get(name='New Character')
+        self.assertEqual(new_character.description, 'This is a new character.')
+        
+    def test_put_character(self):
+        character = Character.objects.create(name='Test Character', id=1)
         url = reverse('put', args=[character.id])
-        data = {'name': 'Updated Character', 'description': 'Updated Description', 'level': 2}
+        data = {
+            'name': 'Test Character',
+            'description': 'Test Description',
+            'picture': 'Test Picture',
+        }
         response = self.client.put(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(Character.objects.get().name, 'Updated Character')
-        self.assertEqual(Character.objects.get().description, 'Updated Description')
-        self.assertEqual(Character.objects.get().level, 2)
+        self.assertEqual(Character.objects.get().description, 'Test Description')
+    
+    def test_patch_character(self):
+        character = Character.objects.create(name='Test Character', id=1)
+        url = reverse('patch', args=[character.id])
+        data = {
+            'description': 'Test Description',
+        }
+        response = self.client.patch(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(Character.objects.get().description, 'Test Description')
 
     def test_delete_character(self):
         character = Character.objects.create(name='Test Character', id= 1)

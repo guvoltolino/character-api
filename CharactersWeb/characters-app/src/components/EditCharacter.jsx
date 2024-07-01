@@ -36,17 +36,14 @@ const EditCharacterModal = ({
         >
           <div className="fixed inset-0 z-10 overflow-y-auto">
             <div className="flex min-h-full items-center justify-center p-4 text-center sm:items-center sm:p-0">
-              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+              <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                 <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                   <div className="sm:flex sm:items-start">
                     <div className="text-center sm:ml-4 sm:text-left w-full">
-                      <Dialog.Title
-                        as="h3"
-                        className="text-lg font-medium leading-6 text-gray-900 flex items-center justify-center space-x-2"
-                      >
+                      <div className="text-lg font-medium leading-6 text-gray-900 flex items-center justify-center space-x-2">
                         <FaExclamationTriangle className="text-yellow-500" />
                         <span>Editar Personagem</span>
-                      </Dialog.Title>
+                      </div>
                       <div className="mt-4">
                         <label
                           htmlFor="name"
@@ -96,24 +93,24 @@ const EditCharacterModal = ({
                       </div>
                     </div>
                   </div>
-                  <div className="flex justify-end space-x-3 mt-5">
+                  <div className="flex justify-end mt-5">
                     <button
                       type="button"
                       onClick={onClose}
-                      className="inline-flex justify-center rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm ring-1 ring-gray-300 hover:bg-gray-50"
+                      className="inline-flex justify-center items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
                     >
                       Cancelar
                     </button>
                     <button
                       type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-yellow-500 text-base font-medium text-white hover:bg-yellow-600"
                       onClick={onSubmit}
+                      className="ml-3 inline-flex justify-center items-center px-4 py-2 border border-transparent shadow-sm text-base font-medium rounded-md text-white bg-yellow-500 hover:bg-yellow-600"
                     >
                       Salvar Alterações
                     </button>
                   </div>
                 </div>
-              </Dialog.Panel>
+              </div>
             </div>
           </div>
         </Transition.Child>
